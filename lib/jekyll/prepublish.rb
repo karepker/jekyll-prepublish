@@ -27,6 +27,7 @@ module JekyllPrepublish
 
             Jekyll.logger.debug('Getting post to check.')
             post = get_post(configuration, site)
+            Jekyll.logger.info("Running prepublish on post #{post.path}.")
 
             Jekyll.logger.debug('Rendering and parsing post HTML.')
             post.output = Jekyll::Renderer.new(site, post).run
