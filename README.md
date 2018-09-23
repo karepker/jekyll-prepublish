@@ -1,39 +1,61 @@
-# Jekyll::Prepublish
+# `jekyll-prepublish`
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/jekyll/prepublish`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+`jekyll-prepublish` is a gem for running arbitrary validation against individual
+posts and outputting errors based on their content or configuration.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Currently `jekyll-prepublish` is available on Github. You may install it by
+adding the following configuration to your applications Gemfile.
 
-```ruby
-gem 'jekyll-prepublish'
+```
+gem 'jekyll-prepublish', :git => 'https://github.com/karepker/jekyll-prepublish.git'
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install jekyll-prepublish
+And then running `bundler update`.
 
 ## Usage
 
-TODO: Write usage instructions here
+### Standalone
+
+To run `jekyll-prepublish` against an arbitrary post, execute: `bundler exec
+jekyll prepublish -p "/path/to/your/post` in the jekyll root directory of your
+website, replacing `/path/to/your/post` with the path to your post relative to
+the jekyll root directory.
+
+### Version control hooks
+
+It is useful to integrate `jekyll-prepublish` into version control-based hooks
+that run and check its output before code is submitted automatically.
+
+For git, an example hook setup would be to put the following script in
+`.git/hooks/pre-commit`:
+
+```bash
+#!/bin/bash
+
+total_failed_validators=0
+
+for pending_file in $(git diff --name-only --cached); do
+	bundler exec jekyll prepublish -p "$pending_file"
+	((total_failed_validators+=$?))
+done
+
+exit $total_failed_validators
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+To install, execute `bundler install`.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To run unit tests, execute `rake spec`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/jekyll-prepublish. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at
+https://github.com/karepker/jekyll-prepublish. This is a personal, best-effort
+project, so no [SLA][Service Level Agreement] is provided for fixes. In the
+unlikely case that this actually attracts attention, I will try and review and
+respond appropriately as soon as I can to anything I can help with.
 
-## Code of Conduct
-
-Everyone interacting in the Jekyll::Prepublish project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/jekyll-prepublish/blob/master/CODE_OF_CONDUCT.md).
+[Service Level Agreement]: https://en.wikipedia.org/wiki/Service-level_agreement
