@@ -26,7 +26,13 @@ module JekyllPrepublish
             site.read
 
             Jekyll.logger.debug('Getting post to check.')
-            post = get_post(configuration, site)
+            path = configuration.fetch("path")
+            post = site.posts.docs.find { |post| post.relative_path == path }
+            if post.nil?
+              Jekyll.logger.info(
+                "No post with path \"#{path}\" could be found, exiting.")
+              exit 0
+            end
             Jekyll.logger.info("Running prepublish on post #{post.path}.")
 
             Jekyll.logger.debug('Rendering and parsing post HTML.')
@@ -48,18 +54,6 @@ module JekyllPrepublish
           end
         end
       end
-
-      def get_post(configuration, site)
-        post_path = configuration.fetch("path")
-        post = site.posts.docs.find { |post| post.relative_path == post_path }
-        if post.nil?
-          Jekyll.logger.abort_with(
-            "Could not find post with path #{post_path}!")
-        end
-
-        post
-      end
-
     end
   end
 end
