@@ -45,7 +45,7 @@ module JekyllPrepublish
             registry.each do |validator|
               Jekyll.logger.debug(validator.describe_validation)
               validation_text = validator.validate(post, document, site)
-              next if validation_text.empty?
+              next if validation_text.nil?
               validator_errors += 1
               $stderr.puts validation_text
             end
