@@ -24,6 +24,6 @@ module JekyllPrepublish
 
     private
 
-    TAG_WHITELIST = %w{movie book music}
+    TAG_WHITELIST = %w{movie book music TV}
   end
 end
