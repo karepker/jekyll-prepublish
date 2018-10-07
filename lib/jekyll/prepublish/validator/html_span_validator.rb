@@ -29,7 +29,7 @@ module JekyllPrepublish
       }.join("\n")
     end
 
-    BLACKLISTED_CLASSES = %w{remove redact}
+    BLACKLISTED_CLASSES = %w{remove redact reword}
     private_constant :BLACKLISTED_CLASSES
 
   end
