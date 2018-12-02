@@ -8,7 +8,6 @@ end
 
 describe JekyllPrepublish::ValidatorRegistry do
   it "registers and unregisters validators without blocks" do
-
     validator = JekyllPrepublish::ValidatorRegistry.register(FakeValidator.new)
     registry = JekyllPrepublish::ValidatorRegistry.new
     expect(registry.count).to eql(1)
