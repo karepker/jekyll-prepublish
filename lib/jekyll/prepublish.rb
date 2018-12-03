@@ -42,8 +42,9 @@ module JekyllPrepublish
             Jekyll.logger.debug('Running validation.')
             registry = JekyllPrepublish::ValidatorRegistry.new
             validator_errors = 0
-            registry.each do |validator|
-              Jekyll.logger.debug(validator.describe_validation)
+            registry.each do |key, validator|
+              Jekyll.logger.debug(
+                  "Running #{key} validator: #{validator.describe_validation}")
               validation_text = validator.validate(post, document, site)
               next if validation_text.nil?
               validator_errors += 1
