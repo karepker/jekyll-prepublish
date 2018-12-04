@@ -17,14 +17,4 @@ describe JekyllPrepublish::ValidatorRegistry do
     expect(JekyllPrepublish::ValidatorRegistry.unregister("fake")).to be
     expect(registry.count).to eql(0)
   end
-
-  it "automatically unregisters validators with a block" do
-    registry = JekyllPrepublish::ValidatorRegistry.new
-    JekyllPrepublish::ValidatorRegistry.register(
-        "fake", lambda { return FakeValidator.new }) do |_key, _initializer|
-      expect(registry.count).to eql(1)
-    end
-    expect(registry.count).to eql(0)
-  end
-
 end
