@@ -5,11 +5,21 @@ require 'jekyll/prepublish/validator/post_tag_validator'
 require 'jekyll/prepublish/validator/validator_registry'
 
 JekyllPrepublish::ValidatorRegistry.register(
-  "post tag", lambda { return JekyllPrepublish::PostTagValidator.new })
+  "post tag",
+  lambda do |configuration|
+    return JekyllPrepublish::PostTagValidator.new(configuration)
+  end
+)
 
 JekyllPrepublish::ValidatorRegistry.register(
-  "HTML span", lambda { return JekyllPrepublish::HtmlSpanValidator.new})
+  "HTML span", lambda do |configuration|
+    JekyllPrepublish::HtmlSpanValidator.new(configuration)
+  end
+)
 
 JekyllPrepublish::ValidatorRegistry.register(
   "internal link",
-  lambda { return JekyllPrepublish::InternalLinkValidator.new })
+  lambda do |_configuration|
+    return JekyllPrepublish::InternalLinkValidator.new
+  end
+)

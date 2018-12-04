@@ -2,7 +2,7 @@
 
 module JekyllPrepublish
   class PostTagValidator
-    def initialize
+    def initialize(configuration)
       @whitelist = Set.new(TAG_WHITELIST)
     end
 

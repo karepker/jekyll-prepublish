@@ -3,7 +3,8 @@ require 'jekyll/prepublish/validator/html_span_validator'
 
 describe JekyllPrepublish::HtmlSpanValidator do
   it "describes validation" do
-    validator = JekyllPrepublish::HtmlSpanValidator.new
+    configuration = Hash.new
+    validator = JekyllPrepublish::HtmlSpanValidator.new(configuration)
     expect(validator).to respond_to(:describe_validation)
   end
 
@@ -15,8 +16,9 @@ describe JekyllPrepublish::HtmlSpanValidator do
   </body>
 </html>})
 
+    configuration = Hash.new
+    validator = JekyllPrepublish::HtmlSpanValidator.new(configuration)
     # Pass post, site as nil because they are unused.
-    validator = JekyllPrepublish::HtmlSpanValidator.new
     expect(validator.validate(nil, document, nil)).to be_nil
   end
 
@@ -28,8 +30,9 @@ describe JekyllPrepublish::HtmlSpanValidator do
   </body>
 </html>})
 
+    configuration = Hash.new
+    validator = JekyllPrepublish::HtmlSpanValidator.new(configuration)
     # Pass post, site as nil because they are unused.
-    validator = JekyllPrepublish::HtmlSpanValidator.new
     expect(validator.validate(nil, document, nil)).to eql(
         ".remove has violations [Text that should be removed].")
   end
@@ -43,8 +46,9 @@ describe JekyllPrepublish::HtmlSpanValidator do
   </body>
 </html>})
 
+    configuration = Hash.new
+    validator = JekyllPrepublish::HtmlSpanValidator.new(configuration)
     # Pass post, site as nil because they are unused.
-    validator = JekyllPrepublish::HtmlSpanValidator.new
     expect(validator.validate(nil, document, nil)).to eql(
       ".remove has violations [Text that should be removed, "\
       "More text that should be removed].")
@@ -59,8 +63,9 @@ describe JekyllPrepublish::HtmlSpanValidator do
   </body>
 </html>})
 
+    configuration = Hash.new
+    validator = JekyllPrepublish::HtmlSpanValidator.new(configuration)
     # Pass post, site as nil because they are unused.
-    validator = JekyllPrepublish::HtmlSpanValidator.new
     expect(validator.validate(nil, document, nil)).to eql(
       %q{.remove has violations [Text that should be removed].
 .redact has violations [Text that should be redacted].})

@@ -9,11 +9,13 @@ end
 describe JekyllPrepublish::ValidatorRegistry do
   it "registers and unregisters validators without blocks" do
     validator = JekyllPrepublish::ValidatorRegistry.register("fake",
-        lambda { return FakeValidator.new })
+        lambda { |configuration| return FakeValidator.new })
     registry = JekyllPrepublish::ValidatorRegistry.new
     expect(registry.count).to eql(1)
+    configuration = Hash.new
     # Do not enforce any requirements for key.
-    expect(registry.each).to all(include(be_a(String), respond_to(:test)))
+    expect(registry.each_validator(configuration)).to all(
+        include(be_a(String), respond_to(:test)))
     expect(JekyllPrepublish::ValidatorRegistry.unregister("fake")).to be
     expect(registry.count).to eql(0)
   end

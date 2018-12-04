@@ -5,11 +5,20 @@ module JekyllPrepublish
     include Enumerable
     @@validator_initializers = Hash.new
 
-    def each(&block)
-      return to_enum(:each) unless block_given?
+    # Loops through each key and initialized validator.
+    def each_validator(jekyll_prepublish_configuration, &block)
+      return to_enum(:each_validator,
+                     jekyll_prepublish_configuration) unless block_given?
       @@validator_initializers.each_pair do |key, initializer|
-        yield(key, initializer.call)
+        validator_configuration = jekyll_prepublish_configuration.fetch(
+            key, Hash.new)
+        yield(key, initializer.call(validator_configuration))
       end
+    end
+
+    # Loops through each key and validator initialization function.
+    def each(&block)
+      @@validator_initializers.each(&block)
     end
 
     class << self

@@ -2,7 +2,7 @@
 
 module JekyllPrepublish
   class HtmlSpanValidator
-    def initialize
+    def initialize(configuration)
       @blacklisted_classes = Set.new(BLACKLISTED_CLASSES)
     end
 
