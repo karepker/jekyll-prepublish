@@ -1,13 +1,14 @@
-# Finds disallowed tags.
+# Finds non-whitelisted tags.
 
 module JekyllPrepublish
   class PostTagValidator
     def initialize(configuration)
-      @whitelist = Set.new(TAG_WHITELIST)
+      @whitelist = Set.new(
+          configuration.fetch('tag_whitelist', Array.new))
     end
 
     def describe_validation
-      'Checking tags.'
+      "Checking tags are from whitelist [#{@whitelist.to_a.join(', ')}]."
     end
 
     def validate(post, _document, _site)
@@ -22,8 +23,5 @@ module JekyllPrepublish
       "Tags not allowed are {#{tag_difference.to_a.join(", ")}}."
     end
 
-    private
-
-    TAG_WHITELIST = %w{movie book music TV}
   end
 end

@@ -7,11 +7,21 @@ describe JekyllPrepublish::PostTagValidator do
     expect(validator).to respond_to(:describe_validation)
   end
 
-  it "returns nil when tags are a proper subset of whitelist" do
+  it "marks all tags as bad when no whitelist is given" do
     post = instance_double("Jekyll::Page",
                            :data => {"tags" => Set.new(["movie"])})
 
     configuration = Hash.new
+    validator = JekyllPrepublish::PostTagValidator.new(configuration)
+    # Pass document, site as nil because they are unused.
+    expect(validator.validate(post, nil, nil)).to include("movie")
+  end
+
+  it "returns nil when tags are a proper subset of whitelist" do
+    post = instance_double("Jekyll::Page",
+                           :data => {"tags" => Set.new(["movie"])})
+
+    configuration = { "tag_whitelist" => %w{movie} }
     validator = JekyllPrepublish::PostTagValidator.new(configuration)
     # Pass document, site as nil because they are unused.
     expect(validator.validate(post, nil, nil)).to be_nil
@@ -21,7 +31,7 @@ describe JekyllPrepublish::PostTagValidator do
     post = instance_double("Jekyll::Page",
                            :data => {"tags" => Set.new(["movie", "book",
                                                         "music"])})
-    configuration = Hash.new
+    configuration = { "tag_whitelist" => %w{book movie music} }
     validator = JekyllPrepublish::PostTagValidator.new(configuration)
     # Pass document, site as nil because they are unused.
     expect(validator.validate(post, nil, nil)).to be_nil
@@ -30,7 +40,8 @@ describe JekyllPrepublish::PostTagValidator do
   it "finds tags that are not elements of whitelist" do
     post = instance_double("Jekyll::Page",
                            :data => {"tags" => Set.new(["very", "wrong"])})
-    configuration = Hash.new
+
+    configuration = { "tag_whitelist" => %w{book movie music} }
     validator = JekyllPrepublish::PostTagValidator.new(configuration)
     # Pass document, site as nil because they are unused.
     expect(validator.validate(post, nil, nil)).to include("wrong")
