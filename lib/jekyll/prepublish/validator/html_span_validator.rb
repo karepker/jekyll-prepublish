@@ -3,11 +3,13 @@
 module JekyllPrepublish
   class HtmlSpanValidator
     def initialize(configuration)
-      @blacklisted_classes = Set.new(BLACKLISTED_CLASSES)
+      @blacklisted_classes = Set.new(
+          configuration.fetch('blacklisted_classes', Array.new))
     end
 
     def describe_validation
-      'Checking <span> elements.'
+      'Checking for blacklisted <span> classes: '\
+      "[#{@blacklisted_classes.to_a.join(', ')}]."
     end
 
     # Finds blacklisted <span> elements by class and returns an error indicating
@@ -28,9 +30,6 @@ module JekyllPrepublish
         ".#{class_text} has violations [#{violations.join(', ')}]."
       }.join("\n")
     end
-
-    BLACKLISTED_CLASSES = %w{remove redact reword}
-    private_constant :BLACKLISTED_CLASSES
 
   end
 end

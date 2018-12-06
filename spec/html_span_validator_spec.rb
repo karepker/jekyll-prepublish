@@ -16,6 +16,20 @@ describe JekyllPrepublish::HtmlSpanValidator do
   </body>
 </html>})
 
+    configuration = { "blacklisted_classes" => %w{remove} }
+    validator = JekyllPrepublish::HtmlSpanValidator.new(configuration)
+    # Pass post, site as nil because they are unused.
+    expect(validator.validate(nil, document, nil)).to be_nil
+  end
+
+  it "returns nil when no blacklisted classes are given" do
+    document = Nokogiri::HTML(
+    %q{<html>
+  <body>
+    <span class="remove">Benevolent text</span>
+  </body>
+</html>})
+
     configuration = Hash.new
     validator = JekyllPrepublish::HtmlSpanValidator.new(configuration)
     # Pass post, site as nil because they are unused.
@@ -30,7 +44,7 @@ describe JekyllPrepublish::HtmlSpanValidator do
   </body>
 </html>})
 
-    configuration = Hash.new
+    configuration = { "blacklisted_classes" => %w{remove} }
     validator = JekyllPrepublish::HtmlSpanValidator.new(configuration)
     # Pass post, site as nil because they are unused.
     expect(validator.validate(nil, document, nil)).to eql(
@@ -46,7 +60,7 @@ describe JekyllPrepublish::HtmlSpanValidator do
   </body>
 </html>})
 
-    configuration = Hash.new
+    configuration = { "blacklisted_classes" => %w{remove} }
     validator = JekyllPrepublish::HtmlSpanValidator.new(configuration)
     # Pass post, site as nil because they are unused.
     expect(validator.validate(nil, document, nil)).to eql(
@@ -63,7 +77,7 @@ describe JekyllPrepublish::HtmlSpanValidator do
   </body>
 </html>})
 
-    configuration = Hash.new
+    configuration = { "blacklisted_classes" => %w{remove redact} }
     validator = JekyllPrepublish::HtmlSpanValidator.new(configuration)
     # Pass post, site as nil because they are unused.
     expect(validator.validate(nil, document, nil)).to eql(
