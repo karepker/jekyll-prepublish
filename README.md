@@ -6,7 +6,7 @@ posts and outputting errors based on their content or configuration.
 ## Installation
 
 Currently `jekyll-prepublish` is available on Github. You may install it by
-adding the following configuration to your applications Gemfile.
+adding the following configuration to your application's Gemfile.
 
 ```
 gem 'jekyll-prepublish', :git => 'https://github.com/karepker/jekyll-prepublish.git'
@@ -19,7 +19,7 @@ And then running `bundler update`.
 ### Standalone
 
 To run `jekyll-prepublish` against an arbitrary post, execute: `bundler exec
-jekyll prepublish -p "/path/to/your/post` in the jekyll root directory of your
+jekyll prepublish -p "/path/to/your/post"` in the jekyll root directory of your
 website, replacing `/path/to/your/post` with the path to your post relative to
 the jekyll root directory.
 
