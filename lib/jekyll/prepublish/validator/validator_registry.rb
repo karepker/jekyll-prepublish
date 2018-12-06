@@ -6,12 +6,11 @@ module JekyllPrepublish
     @@validator_initializers = Hash.new
 
     # Loops through each key and initialized validator.
-    def each_validator(jekyll_prepublish_configuration, &block)
+    def each_validator(validators_configuration, &block)
       return to_enum(:each_validator,
-                     jekyll_prepublish_configuration) unless block_given?
+                     validators_configuration) unless block_given?
       @@validator_initializers.each_pair do |key, initializer|
-        validator_configuration = jekyll_prepublish_configuration.fetch(
-            key, Hash.new)
+        validator_configuration = validators_configuration.fetch(key, Hash.new)
         yield(key, initializer.call(validator_configuration))
       end
     end
