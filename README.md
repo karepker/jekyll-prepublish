@@ -3,25 +3,85 @@
 `jekyll-prepublish` is a gem for running arbitrary validation against individual
 posts and outputting errors based on their content or configuration.
 
-## Installation
+## Quick start
 
-Currently `jekyll-prepublish` is available on Github. You may install it by
-adding the following configuration to your application's Gemfile.
+### Installation
+
+Add the following to your `Gemfile` in your Jekyll root directory.
 
 ```
 gem 'jekyll-prepublish', :git => 'https://github.com/karepker/jekyll-prepublish.git'
 ```
 
-And then running `bundler update`.
+Then run `bundler update`.
+
+### Configuration
+
+Add the following to your `_config.yml` in your Jekyll root directory.
+
+```yaml
+jekyll-prepublish:
+  validators:
+    HTML span blacklist:
+      blacklisted_classes:
+        - redact
+        - remove
+        - reword
+    post tag whitelist:
+      tag_whitelist:
+        - blog
+        - public
+    internal link:
+```
+
+Read more about the configuration options [below](#configuration-options).
+
+### Running
+
+To run `jekyll-prepublish` against `/path/to/your/post.md`, run the following
+command in your Jekyll root directory:
+
+`$ bundler exec jekyll prepublish -p "/path/to/your/post.md"`
+
+See [below](#version-control-hooks) for an example of how to integrate it into
+your version control hooks.
 
 ## Usage
 
-### Standalone
+### Configuration options
 
-To run `jekyll-prepublish` against an arbitrary post, execute: `bundler exec
-jekyll prepublish -p "/path/to/your/post"` in the jekyll root directory of your
-website, replacing `/path/to/your/post` with the path to your post relative to
-the jekyll root directory.
+By default `jekyll-prepublish` does not run any validation on given post.
+Validators must be specified in the Jekyll configuration file. This is done with
+the following syntax:
+
+```yaml
+jekyll-prepublish:
+  validators:
+    validator 1:
+      <validator 1 specific options>
+    validator 2:
+      <validator 2 specific options>
+```
+
+Currently available validators are:
+
+1. `HTML span`: Validates that a given post has no span classes on the blacklist
+   given in the configuration.
+
+   Options:
+
+    * `blacklisted_classes`: `<span>` classes that should not be found.
+
+1. `internal link`: Validates that internal links pointed to by the post exist.
+
+   No options.
+
+1. `post tag`: Validates that all tags on the post are on a whitelist given in
+   the configuration.
+
+   Options:
+
+    * `tag_whitelist`: Tags that are allowed on the post.
 
 ### Version control hooks
 
