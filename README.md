@@ -52,7 +52,7 @@ To run unit tests, execute `rake spec`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at
+Bug reports and pull requests are welcome on Github at
 https://github.com/karepker/jekyll-prepublish. This is a personal, best-effort
 project, so no [SLA][Service Level Agreement] is provided for fixes. In the
 unlikely case that this actually attracts attention, I will try and review and
