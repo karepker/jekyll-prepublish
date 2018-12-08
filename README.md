@@ -38,10 +38,10 @@ Read more about the configuration options [below](#configuration-options).
 
 ### Running
 
-To run `jekyll-prepublish` against `/path/to/your/post.md`, run the following
-command in your Jekyll root directory:
+To run `jekyll-prepublish` against `jekyll_root/path/to/post.md`, run the
+following command in your Jekyll root directory:
 
-`$ bundler exec jekyll prepublish -p "/path/to/your/post.md"`
+`$ bundler exec jekyll prepublish -p "jekyll_root/path/to/post.md"`
 
 See [below](#version-control-hooks) for an example of how to integrate it into
 your version control hooks.
