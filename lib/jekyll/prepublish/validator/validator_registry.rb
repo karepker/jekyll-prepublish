@@ -5,13 +5,19 @@ module JekyllPrepublish
     include Enumerable
     @@validator_initializers = Hash.new
 
-    # Loops through each key and initialized validator.
+    # Attempts to run each validator given in "validators" in the configuration.
+    # If the validator is not found, will emit a warning and continue.
     def each_validator(validators_configuration, &block)
       return to_enum(:each_validator,
                      validators_configuration) unless block_given?
-      @@validator_initializers.each_pair do |key, initializer|
-        validator_configuration = validators_configuration.fetch(key, Hash.new)
-        yield(key, initializer.call(validator_configuration))
+      validators_configuration.each_pair do |key, configuration|
+        begin
+          initializer = @@validator_initializers.fetch(key)
+        rescue KeyError => e
+          Jekyll.logger.warn("#{e.message}")
+          next
+        end
+        yield(key, initializer.call(configuration))
       end
     end
 
