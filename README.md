@@ -69,8 +69,8 @@ Currently available validators are:
    given in the configuration.
 
    Options:
-
-    * `blacklisted_classes`: `<span>` classes that should not be found.
+    * `blacklisted_classes`: Classes not allowed on `<span>` elements the HTML
+      generated from the post body.
 
 1. `internal link`: Validates that internal links pointed to by the post exist.
 
@@ -80,7 +80,6 @@ Currently available validators are:
    the configuration.
 
    Options:
-
     * `tag_whitelist`: Tags that are allowed on the post.
 
 ### Version control hooks
