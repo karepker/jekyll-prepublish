@@ -5,14 +5,14 @@ require 'jekyll/prepublish/validator/post_tag_validator'
 require 'jekyll/prepublish/validator/validator_registry'
 
 JekyllPrepublish::ValidatorRegistry.register(
-  "post tag",
+  "post tag whitelist",
   lambda do |configuration|
     return JekyllPrepublish::PostTagValidator.new(configuration)
   end
 )
 
 JekyllPrepublish::ValidatorRegistry.register(
-  "HTML span", lambda do |configuration|
+  "HTML span blacklist", lambda do |configuration|
     JekyllPrepublish::HtmlSpanValidator.new(configuration)
   end
 )
