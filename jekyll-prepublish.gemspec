@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Kar Epker"]
   spec.email         = ["karepker@gmail.com"]
 
-  spec.summary       = %q{Ensures no sensitive information is published.}
+  spec.summary       = %q{Runs arbitrary validation against a given post.}
   spec.homepage      = %q{https://github.com/karepker}
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the
